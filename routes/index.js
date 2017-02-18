@@ -1,6 +1,6 @@
 const wpi = require('wiring-pi');
 
-var pins = [4,17];
+var pins = [4,22];
 
 module.exports = function(req, res) {
   var output = []; 

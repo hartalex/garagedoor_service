@@ -1,0 +1,2 @@
+sudo cp garageService /etc/init.d/garageService
+sudo update-rc.d garageService defaults
