@@ -2,7 +2,7 @@
 
 USER="root"
 NODE_ENV="production"
-PORT="8833"
+PORT="8844"
 APP_DIR="/home/pi/garage_service"
 NODE_APP="index.js"
 KWARGS=""
