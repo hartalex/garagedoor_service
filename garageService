@@ -3,7 +3,7 @@
 USER="root"
 NODE_ENV="production"
 PORT="8844"
-APP_DIR="/home/pi/garage_service"
+APP_DIR="/home/pi/garagedoor_service"
 NODE_APP="index.js"
 KWARGS=""
 CONFIG_DIR="$APP_DIR"
