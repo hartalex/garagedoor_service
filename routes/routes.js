@@ -1,8 +1,12 @@
 const index = require('./index.js')
-const openclose = require('./openclose.js')
+const trigger = require('./trigger.js')
+const bodyParser = require('body-parser')
+
+const jsonParser = bodyParser.json()
+
 module.exports = function(app) {
 
 app.get('/', index);
-app.get('/openclose', openclose);
+app.post('/trigger',jsonParser, trigger);
 
 }
