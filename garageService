@@ -33,7 +33,7 @@ APP_NAME="Node app"
 ###############
 
 USAGE="Usage: $0 {start|stop|restart|status} [--force]"
-FORCE_OP=false
+FORCE_OP=true
 
 pid_file_exists() {
     [ -f "$PID_FILE" ]
