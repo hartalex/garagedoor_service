@@ -1,4 +1,4 @@
-const wpi = require('wiring-pi')
+const wpi = require('wiringpi-node')
 
 var pins = [23, 24]
 

@@ -18,9 +18,10 @@
     "mocha": "^3.2.0",
     "nyc": "^10.3.2",
     "simple-mock": "^0.7.3"
-  },"dependencies": {
+  },
+  "dependencies": {
     "body-parser": "^1.16.1",
     "express": "^4.14.1",
-    "wiring-pi": "^2.2.1"
+    "wiringpi-node": "^2.4.4"
   }
 }
