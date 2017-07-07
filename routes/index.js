@@ -1,16 +1,18 @@
 const wpi = require('wiringpi-node')
 
-var pins = [4, 22]
+var pins = [10, 27]
+var outids = [4, 22]
 
 module.exports = function (req, res) {
   var output = []
   wpi.wiringPiSetupGpio()
-  pins.forEach(function (pin) {
+  for (var i= 0; i < pins.length; i++) {
+    var pin = pins[i] 
     wpi.pinMode(pin, wpi.INPUT)
     wpi.pullUpDnControl(pin, wpi.PUD_UP)
     var pinval = wpi.digitalRead(pin)
     console.log(pinval)
-    output.push({'sensorId': 'gd-000000' + pin, 'isOpen': pinval === 1})
-  })
+    output.push({'sensorId': 'gd-000000' + outids[i], 'isOpen': pinval === 1})
+  }
   res.json(output)
 }
