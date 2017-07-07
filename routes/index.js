@@ -6,8 +6,8 @@ var outids = [4, 22]
 module.exports = function (req, res) {
   var output = []
   wpi.wiringPiSetupGpio()
-  for (var i= 0; i < pins.length; i++) {
-    var pin = pins[i] 
+  for (var i = 0; i < pins.length; i++) {
+    var pin = pins[i]
     wpi.pinMode(pin, wpi.INPUT)
     wpi.pullUpDnControl(pin, wpi.PUD_UP)
     var pinval = wpi.digitalRead(pin)
