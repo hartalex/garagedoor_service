@@ -1,11 +1,39 @@
 var express = require('express')
 var routes = require('./routes/routes')
+const http = require('http')
+const WebSocket = require('ws')
 const port = process.env.PORT || 8844
 const app = express()
 const expressWinston = require('express-winston')
 const config = require('./config')
-const wpi = require('wiringpi-node')
+const wpi = require('./test/WiringPiMock') // require('wiringpi-node')
 const logging = require('winston')
+
+const sendDoorSensorChanges = function (ws) {
+  return () => {
+    var myerror = false
+    for (var i = 0; i < config.pins.length; i++) {
+      var pin = config.pins[i]
+      if (pin.type === 'door') {
+        var pinval = wpi.digitalRead(pin.pin)
+        if (config.pins[i].value !== (pinval === 1)) {
+          config.pins[i].value = pinval === 1
+          var message = JSON.stringify({'sensorId': pin.id, 'isOpen': config.pins[i].value})
+          logging.log('debugging', 'Sending Data', message)
+          ws.send(message, function ack (error) {
+            if (typeof error !== 'undefined') {
+              logging.log('error', 'Websocket Send ERROR', error)
+              myerror = true
+            }
+          })
+        }
+      }
+    }
+    if (!myerror) {
+      setTimeout(sendDoorSensorChanges(ws), 500)
+    }
+  }
+}
 
 // Setup GPIO
 wpi.wiringPiSetupGpio()
@@ -49,4 +77,13 @@ app.use(expressWinston.errorLogger({
   ]
 }))
 
-app.listen(port)
+const server = http.createServer(app)
+const wss = new WebSocket.Server({ server })
+
+wss.on('connection', function connection (ws, req) {
+  setTimeout(sendDoorSensorChanges(ws), 500)
+})
+
+server.listen(port, function listening () {
+  logging.log('info', 'Listening on: ' + port)
+})

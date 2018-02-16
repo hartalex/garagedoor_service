@@ -2,7 +2,7 @@ module.exports = {
   wiringPiSetupGpio: function () {},
   pinMode: function () {},
   pullUpDnControl: function () {},
-  digitalRead: function () { return 0 },
+  digitalRead: function () { return Math.floor(Math.random() * 2) },
   digitalWrite: function () {},
   OUTPUT: 0,
   INPUT: 0,
