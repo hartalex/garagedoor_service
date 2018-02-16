@@ -1,5 +1,4 @@
 const config = require('../config')
-const logging = require('winston')
 
 module.exports = function (req, res) {
   var output = []
