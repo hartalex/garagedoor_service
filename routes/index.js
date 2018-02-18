@@ -1,7 +1,7 @@
 const wpi = require('wiringpi-node')
 
-var pins = [10, 27]
-var outids = [4, 22]
+var pins = [10, 27,17]
+var outids = [4, 22, 17]
 
 module.exports = function (req, res) {
   var output = []
