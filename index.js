@@ -6,7 +6,7 @@ const port = process.env.PORT || 8844
 const app = express()
 const expressWinston = require('express-winston')
 const config = require('./config')
-const wpi = require('./test/WiringPiMock') // require('wiringpi-node')
+const wpi = require('wiringpi-node')
 const logging = require('winston')
 
 const sendDoorSensorChanges = function (ws) {
