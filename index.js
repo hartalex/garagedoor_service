@@ -15,6 +15,7 @@ const sendDoorSensorChanges = function (ws) {
     for (var i = 0; i < config.pins.length; i++) {
       var pin = config.pins[i]
       if (pin.type === 'door') {
+        wpi.pullUpDnControl(pin.pin, wpi.PUD_UP)
         var pinval = wpi.digitalRead(pin.pin)
         if (config.pins[i].value !== (pinval === 1)) {
           config.pins[i].value = pinval === 1
@@ -42,7 +43,6 @@ for (var i = 0; i < config.pins.length; i++) {
   if (pin.type === 'door') {
     // Set Input Pins
     wpi.pinMode(pin.pin, wpi.INPUT)
-    wpi.pullUpDnControl(pin.pin, wpi.PUD_UP)
     logging.log('info', 'Setting ' + pin.pin + ' to INPUT', pin)
   } else if (pin.type === 'relay') {
     // Set Output Pins
