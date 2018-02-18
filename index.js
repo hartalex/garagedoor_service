@@ -18,9 +18,9 @@ const sendDoorSensorChanges = function (ws) {
         wpi.pullUpDnControl(pin.pin, wpi.PUD_UP)
         var pinval = wpi.digitalRead(pin.pin)
         if (config.pins[i].value !== (pinval === 1)) {
-          config.pins[i].value = pinval === 1
+          config.pins[i].value = (pinval === 1)
           var message = JSON.stringify({'sensorId': pin.id, 'isOpen': config.pins[i].value})
-          logging.log('debugging', 'Sending Data', message)
+          logging.log('info', 'Sending Data', message)
           ws.send(message, function ack (error) {
             if (typeof error !== 'undefined') {
               logging.log('error', 'Websocket Send ERROR', error)
