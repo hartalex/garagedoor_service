@@ -30,9 +30,7 @@ const sendDoorSensorChanges = function (ws) {
         }
       }
     }
-    if (!myerror) {
-      setTimeout(sendDoorSensorChanges(ws), 500)
-    }
+    setTimeout(sendDoorSensorChanges(ws), 500)
   }
 }
 
@@ -82,8 +80,27 @@ const wss = new WebSocket.Server({ server })
 
 wss.on('connection', function connection (ws, req) {
   setTimeout(sendDoorSensorChanges(ws), 500)
+  // send initial values
+  for (var i = 0; i < config.pins.length; i++) {
+    var pin = config.pins[i]
+    if (pin.type === 'door') {
+      wpi.pullUpDnControl(pin.pin, wpi.PUD_UP)
+      var pinval = wpi.digitalRead(pin.pin)
+      config.pins[i].value = (pinval === 1)
+      var message = JSON.stringify({'sensorId': pin.id, 'isOpen': config.pins[i].value})
+      logging.log('info', 'Sending Data', message)
+      ws.send(message, function ack (error) {
+        if (typeof error !== 'undefined') {
+          logging.log('error', 'Websocket Send ERROR', error)
+          myerror = true
+        }
+      })
+    }
+  }
 })
 
 server.listen(port, function listening () {
   logging.log('info', 'Listening on: ' + port)
 })
+
+
