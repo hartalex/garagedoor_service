@@ -8,7 +8,7 @@ const expressWinston = require('express-winston')
 const config = require('./config')
 const wpi = require('wiringpi-node')
 const winston = require('winston')
-const logging = new (winston.Logger)({ 
+const logging = new (winston.Logger)({
   transports: [
     new (winston.transports.Console)({timestamp: true})
   ]
@@ -34,7 +34,7 @@ const sendDoorSensorChanges = function (ws) {
           })
         }
       }
-    } 
+    }
     if (myerror) {
 
     } else {
@@ -89,16 +89,16 @@ app.use(expressWinston.errorLogger({
 const server = http.createServer(app)
 const wss = new WebSocket.Server({ server })
 
-function noop() {}
+function noop () {}
 
-function heartbeat() {
-  this.isAlive = true;
-  logging.log('info', 'Hearbeat');
+function heartbeat () {
+  this.isAlive = true
+  logging.log('info', 'Hearbeat')
 }
 
 wss.on('connection', function connection (ws, req) {
-  ws.isAlive = true;
-  ws.on('pong', heartbeat);
+  ws.isAlive = true
+  ws.on('pong', heartbeat)
   setTimeout(sendDoorSensorChanges(ws), 500)
   // send initial values
   for (var i = 0; i < config.pins.length; i++) {
@@ -118,17 +118,15 @@ wss.on('connection', function connection (ws, req) {
   }
 })
 
-const interval = setInterval(function ping() {
-  wss.clients.forEach(function each(ws) {
-    if (ws.isAlive === false) return ws.terminate();
+setInterval(function ping () {
+  wss.clients.forEach(function each (ws) {
+    if (ws.isAlive === false) return ws.terminate()
 
-    ws.isAlive = false;
-    ws.ping(noop);
-  });
-}, 30000);
+    ws.isAlive = false
+    ws.ping(noop)
+  })
+}, 30000)
 
 server.listen(port, function listening () {
   logging.log('info', 'Listening on: ' + port)
 })
-
-
