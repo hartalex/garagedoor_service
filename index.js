@@ -34,8 +34,12 @@ const sendDoorSensorChanges = function (ws) {
           })
         }
       }
+    } 
+    if (myerror) {
+
+    } else {
+      setTimeout(sendDoorSensorChanges(ws), 500)
     }
-    setTimeout(sendDoorSensorChanges(ws), 500)
   }
 }
 
@@ -108,7 +112,6 @@ wss.on('connection', function connection (ws, req) {
       ws.send(message, function ack (error) {
         if (typeof error !== 'undefined') {
           logging.log('error', 'Websocket Send ERROR', error)
-          myerror = true
         }
       })
     }
