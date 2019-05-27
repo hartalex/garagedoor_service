@@ -1,0 +1,2 @@
+curl -H "Content-Type: application/json" -X POST -d '{"sensorId":"gd-0000004"}' http://localhost:8844/trigger
+curl -H "Content-Type: application/json" -X POST -d '{"sensorId":"gd-00000022"}' http://localhost:8844/trigger
